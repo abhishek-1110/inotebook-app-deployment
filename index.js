@@ -16,11 +16,12 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/notes', require('./routes/notes'));
 
 app.use('/', router);
+
 if (process.env.NODE_ENV === 'production') {
   
   const path = require('path')
 
-  app.get('/', (req, res) => {
+  app.get('/*', (req, res) => {
     app.use(express.static(path.join(__dirname, 'client', 'build')))
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
   });
