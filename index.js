@@ -16,14 +16,16 @@ app.use('/api/notes', require('./routes/notes'));
 
 
 if (process.env.NODE_ENV === 'production') {
+  
+
+  app.use('/login', require("./routes/auth"));
+  
   const path = require('path')
 
-  app.get('/', (req, res) => {
+  app.get('/*', (req, res) => {
     app.use(express.static(path.join(__dirname, 'client', 'build')))
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
   });
-
-  app.use('/login', require("./routes/auth"));
 }
 
 app.listen(port, () => {
