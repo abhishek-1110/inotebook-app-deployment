@@ -23,6 +23,14 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client', 'build')))
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
   });
+
+  // available routes
+  app.get('/login', (req, res) => {
+    app.use('/api/auth', require('./routes/auth'));
+
+  })
+  app.use('/api/notes', require('./routes/notes'));
+
 }
 
 app.listen(port, () => {
