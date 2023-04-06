@@ -24,7 +24,9 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-
+app.use('/login', (req, res) => {
+    res.send("HELLLO");
+})
 app.listen(port, () => {
   console.log(`iNotebook backend app listening on port ${port}`)
 })
