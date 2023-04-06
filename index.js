@@ -1,20 +1,21 @@
 const connectToMongo = require('./db');
 const express = require('express')
-var cors = require('cors')
+var cors = require('cors');
+const router = require('./routes/auth');
 
 connectToMongo();
 
 const app = express()
 const port = process.env.PORT || 5000
 
-app.use(express.json()) // this middleware is used if you want to send request through body req.body
 app.use(cors());
+app.use(express.json()) // this middleware is used if you want to send request through body req.body
 
 // available routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/notes', require('./routes/notes'));
 
-
+app.use('/', router);
 if (process.env.NODE_ENV === 'production') {
   
   const path = require('path')
@@ -23,14 +24,6 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client', 'build')))
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
   });
-
-  // available routes
-  app.get('/login', (req, res) => {
-    app.use('/api/auth', require('./routes/auth'));
-
-  })
-  app.use('/api/notes', require('./routes/notes'));
-
 }
 
 app.listen(port, () => {
