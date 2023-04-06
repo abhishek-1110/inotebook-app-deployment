@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-app.use('/login', (req, res) => {
+app.get('/login', (req, res) => {
     res.send("HELLLO");
 })
 app.listen(port, () => {
