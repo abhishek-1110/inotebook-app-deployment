@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = (props) => {
@@ -57,6 +57,12 @@ const Signup = (props) => {
     // spread
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/Home");
+    }
+  });
 
   return (
     <div style={{ paddingTop: "15px" }}>

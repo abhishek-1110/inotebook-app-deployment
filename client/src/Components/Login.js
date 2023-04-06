@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // useHistoy has been changed with useNavigate
@@ -40,6 +40,12 @@ const Login = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate("/Home");
+    }
+  }, )
+  
   const onChange = (e) => {
     // spread
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
