@@ -17,9 +17,6 @@ app.use('/api/notes', require('./routes/notes'));
 
 if (process.env.NODE_ENV === 'production') {
   
-
-  app.use('/login', require("./routes/auth"));
-
   const path = require('path')
 
   app.get('/', (req, res) => {
