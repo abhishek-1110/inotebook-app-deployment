@@ -10,13 +10,17 @@ const Signup = (props) => {
     confirmpassword: "",
   });
 
+  const [loading, setloading] = useState(false);
+
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setloading(true);
     const { name, email, password, confirmpassword } = credentials;
     if (password.length < 5) {
       props.showAlert("Password length should be greater than 5", "danger");
+      setloading(false);
       return;
     }
     if (password !== confirmpassword) {
@@ -24,8 +28,10 @@ const Signup = (props) => {
         "Password and confirm password doesn't matches. Please check",
         "danger"
       );
+      setloading(false);
       return;
     }
+
     const response = await fetch(`${URL}/api/auth/createuser`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       // mode: 'cors', // no-cors, *cors, same-origin
@@ -42,7 +48,7 @@ const Signup = (props) => {
     });
     const json = await response.json();
     console.log(json);
-
+    setloading(false);
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authToken);
