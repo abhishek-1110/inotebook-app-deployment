@@ -133,7 +133,13 @@ const Signup = (props) => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Submit
+          {loading ? (
+            <div class="spinner-border text-light" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </div>
