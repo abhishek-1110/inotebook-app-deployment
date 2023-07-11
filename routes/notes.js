@@ -71,6 +71,8 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
       newNote.tag = tag;
     }
 
+    newNote.date = Date.now();
+
     // Find the note to be updated and update it
     let note = await Note.findById(req.params.id);
     if (!note) {
@@ -84,7 +86,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
     note = await Note.findByIdAndUpdate(
       req.params.id,
       { $set: newNote },
-      { new: true }
+      { new: true },
     );
 
     res.json({ note });
