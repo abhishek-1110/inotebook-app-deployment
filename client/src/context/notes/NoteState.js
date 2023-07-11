@@ -3,7 +3,7 @@ import { useState } from "react";
 import noteContext from "./NoteContext";
 
 const NoteState = (props) => {
-  const host = "";
+  const host = "http://localhost:5000/";
   const notesInitial = [];
 
   const [notes, setNotes] = useState(notesInitial);
@@ -12,7 +12,7 @@ const NoteState = (props) => {
   const getNotes = async () => {
     // to do api call
     // api calls
-    const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+    const response = await fetch(`${host}api/notes/fetchallnotes`, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       // mode: 'cors', // no-cors, *cors, same-origin
       // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -34,7 +34,7 @@ const NoteState = (props) => {
   const addNote = async (title, description, tag) => {
     // to do api call
     // api calls
-    const response = await fetch(`${host}/api/notes/addnote`, {
+    const response = await fetch(`${host}api/notes/addnote`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       // mode: 'cors', // no-cors, *cors, same-origin
       // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -59,7 +59,7 @@ const NoteState = (props) => {
   // delete a note
   const deleteNote = async (id) => {
 
-    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+    const response = await fetch(`${host}api/notes/deletenote/${id}`, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       // mode: 'cors', // no-cors, *cors, same-origin
       // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -84,7 +84,7 @@ const NoteState = (props) => {
   const editNote = async (id, title, description, tag) => {
     // api calls
 
-    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+    const response = await fetch(`${host}api/notes/updatenote/${id}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       // mode: 'cors', // no-cors, *cors, same-origin
       // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

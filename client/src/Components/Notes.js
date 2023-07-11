@@ -10,13 +10,18 @@ const Notes = (props) => {
   const { notes, getNotes, editNote } = context;
 
   let navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(true); // State for loading status
+
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      getNotes();
+    if (localStorage.getItem("token")) {
+      getNotes().then(() => {
+        setIsLoading(false); // Mark loading as completed
+      });
     } else {
       navigate("/login");
     }
-  },);
+  }, [getNotes, navigate]);
 
   const ref = useRef(null);
   const refClose = useRef();
@@ -164,19 +169,30 @@ const Notes = (props) => {
 
       <div className="row my-3">
         <h2>Your Notes</h2>
-        {/* To map your notes and display */}
-        <div className="container mx-2">
-          {notes.length === 0 && "No Notes to Display.. "}
-        </div>
-        {notes.map((note) => {
-          return (
-            <NoteItem
-              key={note._id}
-              updateNote={updateNote}
-              note={note}
-            ></NoteItem>
-          );
-        })}
+        {/* Display loader if loading is in progress */}
+        {isLoading ? (
+          <div className="text-center">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="container mx-2">
+              {notes.length === 0 && "No Notes to Display.. "}
+            </div>
+            {/* Map and display notes */}
+            {notes.map((note) => {
+              return (
+                <NoteItem
+                  key={note._id}
+                  updateNote={updateNote}
+                  note={note}
+                ></NoteItem>
+              );
+            })}
+          </>
+        )}
       </div>
     </>
   );

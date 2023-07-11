@@ -1,0 +1,25 @@
+.my-form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+    position: relative;
+  }
+  
+  .btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary.loading {
+    pointer-events: none;
+  }
+  
+  

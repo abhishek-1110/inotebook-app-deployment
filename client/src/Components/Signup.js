@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../css/Signup.css';
 
 const Signup = (props) => {
-  const URL = "";
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -10,17 +10,17 @@ const Signup = (props) => {
     confirmpassword: "",
   });
 
-  const [loading, setloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setloading(true);
+    setIsLoading(true);
     const { name, email, password, confirmpassword } = credentials;
     if (password.length < 5) {
       props.showAlert("Password length should be greater than 5", "danger");
-      setloading(false);
+      setIsLoading(false);
       return;
     }
     if (password !== confirmpassword) {
@@ -28,11 +28,10 @@ const Signup = (props) => {
         "Password and confirm password doesn't matches. Please check",
         "danger"
       );
-      setloading(false);
+      setIsLoading(false);
       return;
     }
-
-    const response = await fetch(`${URL}/api/auth/createuser`, {
+    const response = await fetch("http://localhost:5000/api/auth/createuser", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       // mode: 'cors', // no-cors, *cors, same-origin
       // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -48,7 +47,7 @@ const Signup = (props) => {
     });
     const json = await response.json();
     console.log(json);
-    setloading(false);
+
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authToken);
@@ -57,6 +56,7 @@ const Signup = (props) => {
     } else {
       props.showAlert("User already exists", "danger");
     }
+    setIsLoading(false);
   };
 
   const onChange = (e) => {
@@ -64,18 +64,12 @@ const Signup = (props) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/Home");
-    }
-  });
-
   return (
     <div style={{ paddingTop: "15px" }}>
       <h4 className="mb-2">Sign Up Here:</h4>
       <form onSubmit={handleSubmit} className="container">
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">
+          <label htmlFor="name" className="form-label">
             Name
           </label>
           <input
@@ -132,13 +126,19 @@ const Signup = (props) => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
-          {loading ? (
-            <div class="spinner-border text-light" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
+        <button
+          type="submit"
+          className={`btn btn-primary ${isLoading ? "disabled" : ""}`}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <div
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></div>
           ) : (
-            "Submit"
+            <span>Submit</span>
           )}
         </button>
       </form>
