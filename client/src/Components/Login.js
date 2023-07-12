@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 // useHistoy has been changed with useNavigate
 const Login = (props) => {
+  const host = "";
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -17,7 +18,7 @@ const Login = (props) => {
 
     setIsLoading(true);
 
-    const response = await fetch("http://localhost:5000/api/auth/login", {
+    const response = await fetch(`${host}/api/auth/login`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       // mode: 'cors', // no-cors, *cors, same-origin
       // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
